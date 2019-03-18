@@ -1,4 +1,4 @@
-pragma solidity 0.5.2;
+pragma solidity 0.5.6;
 
 import "https://github.com/fourpark/721-fourpark-extension/FourPark.sol";
 

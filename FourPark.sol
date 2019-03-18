@@ -1,6 +1,6 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.5.6;
 
-import "https://github.com/fourpark/721-fourpark-extension/FourParkExt.sol";
+import "https://github.com/fourpark/contracts/FourParkExt.sol";
 
 contract FourPark is
   FourParkExt
@@ -38,7 +38,5 @@ contract FourPark is
   {
     super._burn(_tokenId);
   }
-
-  
 
 }
