@@ -1,6 +1,6 @@
-pragma solidity 0.5.6;
+pragma solidity ^0.5.6;
 
-import "https://github.com/fourpark/721-fourpark-extension/FourPark.sol";
+import "https://github.com/fourpark/contracts/FourPark.sol";
 
 /**
  * @dev This is an example contract implementation of NFToken with metadata extension.
