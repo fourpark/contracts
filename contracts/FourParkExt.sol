@@ -88,7 +88,6 @@ contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
     onlyNotSecured(_tokenId)
     returns (bool)
   {
-    require(SecuredMap[_tokenId] == SecuredState.NotSecured);
     SecuredMap[_tokenId] = SecuredState.Secured;
     return true;
   }
@@ -99,7 +98,6 @@ contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
     onlySecured(_tokenId)
     returns (bool)
   {
-    require(SecuredMap[_tokenId] == SecuredState.Secured);
     SecuredMap[_tokenId] = SecuredState.NotSecured;
     return true;
   }

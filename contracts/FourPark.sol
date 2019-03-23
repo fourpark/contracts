@@ -47,7 +47,7 @@ contract FourPark is FourParkExt {
     onlyNotFrozen(_tokenId)
     onlySecured(_tokenId)
   {
-    super._safeTransferFrom(_from, _to, _tokenId, _data);
+    super.safeTransferFrom(_from, _to, _tokenId, _data);
   }
 
   function transferFrom(
@@ -59,7 +59,7 @@ contract FourPark is FourParkExt {
     onlyNotFrozen(_tokenId)
     onlySecured(_tokenId)
   {
-    super._transferFrom(_from, _to, _tokenId);
+    super.transferFrom(_from, _to, _tokenId);
   }
 
 }
