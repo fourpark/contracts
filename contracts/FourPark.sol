@@ -1,10 +1,12 @@
 pragma solidity ^0.5.6;
 
-import "https://github.com/fourpark/contracts/FourParkExt.sol";
+import "https://github.com/0xcert/ethereum-erc721/src/contracts/tokens/nf-token-metadata.sol";
+import "https://github.com/0xcert/ethereum-erc721/src/contracts/tokens/nf-token-enumerable.sol";
+import "https://github.com/0xcert/ethereum-erc721/src/contracts/ownership/ownable.sol";
 
-contract FourPark is
-  FourParkExt
-{
+import "./FourParkExt.sol";
+
+contract FourPark is Ownable, NFTokenMetadata, NFTokenEnumerable, FourParkExt  {
 
   /**
    * @dev Mints a new NFT.

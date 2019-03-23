@@ -1,9 +1,7 @@
 pragma solidity ^0.5.6;
 
-import "https://github.com/0xcert/ethereum-erc721/src/contracts/tokens/nf-token-metadata.sol";
-import "https://github.com/0xcert/ethereum-erc721/src/contracts/ownership/ownable.sol";
 
-contract FourParkExt is Ownable, NFTokenMetadata {
+contract FourParkExt {
 
   enum FrozenState { Frozen, NotFrozen }
   enum SecuredState { Secured, NotSecured }
@@ -13,11 +11,11 @@ contract FourParkExt is Ownable, NFTokenMetadata {
   mapping (uint256 => SecuredState) public SecuredMap;
 
 
-  /************************************************
+  /***********************************************
 
   Frozen
 
-  ************************************************/
+  ***********************************************/
 
   // Modifier to require non-frozen state of token
   modifier onlyNotFrozen(uint256 _tokenId) {
@@ -58,11 +56,11 @@ contract FourParkExt is Ownable, NFTokenMetadata {
 
 
 
-  /************************************************
+  /***********************************************
 
   Secured
 
-  ************************************************/
+  ***********************************************/
 
   // Modifier to require secured state of token
   modifier onlySecured(uint256 _tokenId) {
@@ -75,10 +73,13 @@ contract FourParkExt is Ownable, NFTokenMetadata {
     require(SecuredMap[_tokenId] == SecuredState.NotSecured);
     _;
   }
+
+  /**********************************************/
   
   // Function to secure token
   function secureToken(uint256 _tokenId)
     public
+    onlyNotSecured(_tokenId)
     returns (bool)
   {
     require(SecuredMap[_tokenId] == SecuredState.NotSecured);
@@ -89,7 +90,7 @@ contract FourParkExt is Ownable, NFTokenMetadata {
   // Function to unsecure token
   function unsecureToken(uint256 _tokenId)
     public
-    onlyNotSecured(_tokenId)
+    onlySecured(_tokenId)
     returns (bool)
   {
     require(SecuredMap[_tokenId] == SecuredState.Secured);
@@ -98,7 +99,7 @@ contract FourParkExt is Ownable, NFTokenMetadata {
   }
 
   // Function to query state of token, no gas
-  function securedState(uint256 _tokenId) public view returns (SecuredState) {
+  function getSecuredState(uint256 _tokenId) public view returns (SecuredState) {
     return SecuredMap[_tokenId];
   }
 
