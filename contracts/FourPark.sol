@@ -54,7 +54,7 @@ contract FourPark is Ownable, NFTokenMetadata, NFTokenEnumerable, FourParkExt  {
     super._safeTransferFrom(_from, _to, _tokenId, _data);
   }
 
-    function transferFrom(
+  function transferFrom(
     address _from,
     address _to,
     uint256 _tokenId
@@ -65,7 +65,5 @@ contract FourPark is Ownable, NFTokenMetadata, NFTokenEnumerable, FourParkExt  {
   {
     super._transferFrom(_from, _to, _tokenId);
   }
-
-  
 
 }
