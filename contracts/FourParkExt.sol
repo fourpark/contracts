@@ -11,6 +11,7 @@ contract FourParkExt {
   mapping (uint256 => SecuredState) public SecuredMap;
 
 
+
   /***********************************************
 
   Frozen
@@ -28,6 +29,8 @@ contract FourParkExt {
     require(FrozenMap[_tokenId] == FrozenState.Frozen);
     _;
   }
+
+  /**********************************************/
 
   // Function to freeze token
   function freezeToken(uint256 _tokenId)

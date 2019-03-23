@@ -41,4 +41,31 @@ contract FourPark is Ownable, NFTokenMetadata, NFTokenEnumerable, FourParkExt  {
     super._burn(_tokenId);
   }
 
+  function safeTransferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId,
+    bytes calldata _data
+  )
+    external
+    onlyUnfrozen(_tokenId)
+    onlySecured(_tokenId)
+  {
+    super._safeTransferFrom(_from, _to, _tokenId, _data);
+  }
+
+    function transferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId
+  )
+    external
+    onlyUnfrozen(_tokenId)
+    onlySecured(_tokenId)
+  {
+    super._transferFrom(_from, _to, _tokenId);
+  }
+
+  
+
 }
