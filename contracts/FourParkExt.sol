@@ -1,7 +1,10 @@
 pragma solidity ^0.5.6;
 
+import "@0xcert/ethereum-erc721/src/contracts/tokens/nf-token-metadata.sol";
+import "@0xcert/ethereum-erc721/src/contracts/tokens/nf-token-enumerable.sol";
+import "@0xcert/ethereum-erc721/src/contracts/ownership/ownable.sol";
 
-contract FourParkExt {
+contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
 
   enum FrozenState { Frozen, NotFrozen }
   enum SecuredState { Secured, NotSecured }
