@@ -1,10 +1,11 @@
 pragma solidity ^0.5.6;
 
+import "@0xcert/ethereum-erc721/src/contracts/tokens/nf-token.sol";
 import "@0xcert/ethereum-erc721/src/contracts/tokens/nf-token-metadata.sol";
 import "@0xcert/ethereum-erc721/src/contracts/tokens/nf-token-enumerable.sol";
 import "@0xcert/ethereum-erc721/src/contracts/ownership/ownable.sol";
 
-contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
+contract FourPark is NFToken, NFTokenMetadata, NFTokenEnumerable, Ownable {
 
   enum FrozenState { Frozen, NotFrozen }
   enum SecuredState { Secured, NotSecured }
@@ -38,9 +39,9 @@ contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
   // Function to freeze token
   function freezeToken(uint256 _tokenId)
     public
+    onlyNotFrozen(_tokenId)
     returns (bool)
   {
-    require(FrozenMap[_tokenId] == FrozenState.NotFrozen);
     FrozenMap[_tokenId] = FrozenState.Frozen;
     return true;
   }
@@ -48,15 +49,15 @@ contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
   // Function to unFreezeToken
   function unFreezeToken(uint256 _tokenId)
     public
+    onlyFrozen(_tokenId)
     returns (bool)
   {
-    require(FrozenMap[_tokenId] == FrozenState.Frozen);
     FrozenMap[_tokenId] = FrozenState.NotFrozen;
     return true;
   }
 
   // Function to query state of token, no gas
-  function frozenState(uint256 _tokenId) public view returns (FrozenState) {
+  function getFrozenState(uint256 _tokenId) public view returns (FrozenState) {
     return FrozenMap[_tokenId];
   }
 
@@ -105,6 +106,72 @@ contract FourParkExt is Ownable, NFTokenMetadata, NFTokenEnumerable {
   // Function to query state of token, no gas
   function getSecuredState(uint256 _tokenId) public view returns (SecuredState) {
     return SecuredMap[_tokenId];
+  }
+
+
+
+  /***********************************************
+
+  Overlay Functions
+
+  ***********************************************/
+
+  /**
+   * @dev Mints a new NFT.
+   * @param _to The address that will own the minted NFT.
+   * @param _tokenId of the NFT to be minted by the msg.sender.
+   * @param _uri String representing RFC 3986 URI.
+   */
+  function mint(
+    address _to,
+    uint256 _tokenId,
+    string calldata _uri
+  )
+    external
+    onlyOwner
+  {
+    freezeToken(_tokenId);
+    unsecureToken(_tokenId);
+    super._mint(_to, _tokenId);
+    super._setTokenUri(_tokenId, _uri);
+  }
+
+  /**
+   * @dev Removes a NFT from owner.
+   * @param _tokenId Which NFT we want to remove.
+   */
+  function burn(
+    uint256 _tokenId
+  )
+    external
+    onlyOwner
+  {
+    super._burn(_tokenId);
+  }
+
+  function safeTransferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId,
+    bytes calldata _data
+  )
+    external
+    onlyNotFrozen(_tokenId)
+    onlySecured(_tokenId)
+  {
+    NFToken.safeTransferFrom(_from, _to, _tokenId, _data);
+  }
+
+  function transferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId
+  )
+    external
+    onlyNotFrozen(_tokenId)
+    onlySecured(_tokenId)
+  {
+    NFToken.transferFrom(_from, _to, _tokenId);
   }
 
 }

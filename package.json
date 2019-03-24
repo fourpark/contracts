@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/fourpark/contracts#readme",
   "dependencies": {
-    "@0xcert/ethereum-erc721": "^2.0.0"
+    "@0xcert/ethereum-erc721": "^2.0.0",
+    "openzeppelin-solidity": "^2.2.0"
   }
 }

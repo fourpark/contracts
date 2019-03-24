@@ -5,7 +5,7 @@ import "./FourPark.sol";
 /**
  * @dev This is an example contract implementation of NFToken with metadata extension.
  */
-contract FPMV1 is FourPark {
+contract ArtVault is FourPark {
 
   /**
    * @dev Contract constructor. Sets metadata extension `name` and `symbol`. 
@@ -13,8 +13,8 @@ contract FPMV1 is FourPark {
   constructor()
     public
   {
-    nftName = "Vault 1";
-    nftSymbol = "FPMV1";
+    // nftName = "FPM Art Vault";
+    // nftSymbol = "FPMV1";
   }
 
 }
